@@ -1,0 +1,247 @@
+{% extends "base.html" %}
+
+{% load humanize %}
+
+{% block content %}
+<div class="container masthead">
+    <h1>Question {{question.question_number}} of {{ settings.num_questions }}</h1>
+    <p>
+       Given the below information, which of these tweets would you prefer to read?
+       <br/>
+       <small>(just click on the information to select)</small>
+    </p>
+
+</div>
+<article class="actual_tweet container"><img class="loader" src="{{ STATIC_PATH }}img/ajax-loader.gif" /></article>
+<article class="container">
+    <form name="tweetSelection" action="{{root_url}}answer/" method="post" onSubmit="return validate(this);">
+        {% csrf_token %}
+        <section class="next">
+            <input type="hidden" name="question_id" value="{{ question.id }}" />
+            <button type="submit" class="forms btn large" >
+                {% if question.question_number < settings.num_questions %}Next Question{% else %}Finish!{% endif %}
+            </button>
+        </section>
+        <div class="row">
+            <div class="span12">
+                <div class="row">
+                    <!-- Left Tweet -->
+                    <div class="span6">
+                        <article class="tweet" id="{{question.left_tweet.tweet_id }}">
+                            <table class="condensed-table bordered-table clickable">
+                                <thead>
+                                    <tr>
+                                        <th>Tweet Information</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% if not question.q_type.avatar %}
+                                    <tr class="tweet_avatar" >
+                                        <td>Profile Image</td>
+                                        <td><img src="{{ question.left_tweet.author.profile_image_url }}"/></td>
+                                    </tr>
+                                    {% endif %}
+                                    {% if not question.q_type.screen_name %}
+                                    <tr class="screen_name">
+                                        <td>Screen Name</td>
+                                        <td>
+                                        <p>
+                                            {{ question.left_tweet.author.screen_name|safe }}
+                                        </p></td>
+                                    </tr>
+                                    {% endif %}
+                                    {% if not question.q_type.name %}
+                                    <tr class="name">
+                                        <td>Name</td>
+                                        <td>
+                                        <p>
+                                            {{ question.left_tweet.author.name|safe }}
+                                        </p></td>
+                                    </tr>
+                                    {% endif %}
+                                    {% if not question.q_type.follower_count %}
+                                    <tr class="followers">
+                                        <td>Number of Followers of this user</td>
+                                        <td>
+                                        <p>
+                                            {{ question.left_tweet.author.num_followers|safe|intcomma }}
+                                        </p></td>
+                                    </tr>
+                                    {% endif %}
+                                    {% if not question.q_type.following_count %}
+                                    <tr class="following">
+                                        <td>Number of others the user is Following</td>
+                                        <td>
+                                        <p>
+                                            {{ question.left_tweet.author.num_following|safe|intcomma }}
+                                        </p></td>
+                                    </tr>
+                                    {% endif %}
+                                    {% if not question.q_type.tweet_count %}
+                                    <tr class="tweets">
+                                        <td>Number of Tweets this user has written</td>
+                                        <td>
+                                        <p>
+                                            {{ question.left_tweet.author.num_tweets|safe|intcomma }}
+                                        </p></td>
+                                    </tr>
+                                    {% endif %}
+                                    {% if not question.q_type.tweet_text %}
+                                    <tr class="tweets">
+                                        <td>Tweet Text</td>
+                                        <td>
+                                        <p>
+                                            {{ question.left_tweet.text|safe }}
+                                        </p></td>
+                                    </tr>
+                                    {% endif %}
+                                    {% if not question.q_type.date %}
+                                    <tr class="date">
+                                        <td>Date</td>
+                                        <td>
+                                        <p>
+                                            {{question.left_tweet.created_at|date:"M d Y"}}
+                                        </p></td>
+                                    </tr>
+                                    {% endif %}
+                                    {% if not question.q_type.num_retweets %}
+                                    <tr class="retweets">
+                                        <td>Retweets of this Tweet</td>
+                                        <td>
+                                        <p>
+                                            {{ question.left_tweet.num_retweets|safe|intcomma }}
+                                        </p></td>
+                                    </tr>
+                                    {% endif %}
+                                    {% if not question.q_type.friendship %}
+                                    <tr class="friendship">
+
+                                        <td>
+                                        <p>
+                                            {% if question.timeline_tweet.tweet_id =  question.left_tweet.tweet_id %}You follow this user.{% else %}You do not follow this user.{% endif %}
+                                        </p></td>
+                                    </tr>
+                                    {% endif %}
+                                </tbody>
+                            </table>
+                            <input type="radio" class="forms" name="answer" value="{{ question.left_tweet.tweet_id }}" />
+                        </article>
+                    </div>
+                    <!-- End of Left Tweet -->
+                    <!-- Right Tweet -->
+                    <div class="span6">
+                        <article class="tweet" id="{{question.right_tweet.tweet_id }}">
+                            <table class="condensed-table bordered-table clickable">
+                                <thead>
+                                    <tr>
+                                        <th>Tweet Information</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% if not question.q_type.avatar %}
+                                    <tr class="tweet_avatar" >
+                                        <td>Profile Image</td>
+                                        <td><img src="{{ question.right_tweet.author.profile_image_url }}"/></td>
+                                    </tr>
+                                    {% endif %}
+                                    {% if not question.q_type.screen_name %}
+                                    <tr class="screen_name">
+                                        <td>Screen Name</td>
+                                        <td>
+                                        <p>
+                                            {{ question.right_tweet.author.screen_name|safe }}
+                                        </p></td>
+                                    </tr>
+                                    {% endif %}
+                                    {% if not question.q_type.name %}
+                                    <tr class="name">
+                                        <td>Name</td>
+                                        <td>
+                                        <p>
+                                            {{ question.right_tweet.author.name|safe }}
+                                        </p></td>
+                                    </tr>
+                                    {% endif %}
+                                    {% if not question.q_type.follower_count %}
+                                    <tr class="followers">
+                                        <td>Number of Followers of this user</td>
+                                        <td>
+                                        <p>
+                                            {{ question.right_tweet.author.num_followers|safe|intcomma }}
+                                        </p></td>
+                                    </tr>
+                                    {% endif %}
+                                    {% if not question.q_type.following_count %}
+                                    <tr class="following">
+                                        <td>Number of others the user is Following</td>
+                                        <td>
+                                        <p>
+                                            {{ question.right_tweet.author.num_following|safe|intcomma }}
+                                        </p></td>
+                                    </tr>
+                                    {% endif %}
+                                    {% if not question.q_type.tweet_count %}
+                                    <tr class="tweets">
+                                        <td>Number of Tweets this user has written</td>
+                                        <td>
+                                        <p>
+                                            {{ question.right_tweet.author.num_tweets|safe|intcomma }}
+                                        </p></td>
+                                    </tr>
+                                    {% endif %}
+                                    {% if not question.q_type.tweet_text %}
+                                    <tr class="tweets">
+                                        <td>Tweet Text</td>
+                                        <td>
+                                        <p>
+                                            {{ question.right_tweet.text|safe }}
+                                        </p></td>
+                                    </tr>
+                                    {% endif %}
+                                    {% if not question.q_type.date %}
+                                    <tr class="date">
+                                        <td>Date</td>
+                                        <td>
+                                        <p>
+                                            {{question.right_tweet.created_at|date:"M d Y"}}
+                                        </p></td>
+                                    </tr>
+                                    {% endif %}
+                                    {% if not question.q_type.num_retweets %}
+                                    <tr class="retweets">
+                                        <td>Retweets of this Tweet</td>
+                                        <td>
+                                        <p>
+                                            {{ question.right_tweet.num_retweets|safe|intcomma }}
+                                        </p></td>
+                                    </tr>
+                                    {% endif %}
+                                    {% if not question.q_type.friendship %}
+                                    <tr class="friendship">
+
+                                        <td>
+                                        <p>
+                                            {% if question.timeline_tweet.tweet_id =  question.right_tweet.tweet_id %}You follow this user.{% else %}You do not follow this user.{% endif %}
+                                        </p></td>
+                                    </tr>
+                                    {% endif %}
+                                </tbody>
+                            </table>
+                            <input type="radio" class="forms" name="answer" value="{{ question.right_tweet.tweet_id }}" />
+                        </article>
+                    </div>
+                    <!-- End of Right Tweet -->
+                </div>
+            </div>
+        </div>
+    </form>
+</article>
+{% endblock %}
+
+{% block scripts %}
+<script>
+var root_url = "{{ root_url }}";
+$('.loader').hide();
+</script>
+<script src="{{ STATIC_PATH }}js/questions.js"></script>
+{% endblock %}

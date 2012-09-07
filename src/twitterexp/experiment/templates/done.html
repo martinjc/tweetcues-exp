@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+<!-- complete.html is the final page shown to the user when the quiz is over -->
+{% block content %}
+<div class="container masthead">
+    <h1>Complete!</h1>
+    {% if message %}
+    {{message|safe}}
+    {% endif %}
+    <p>
+        That's it, you're all done!
+    </p>
+    <div class="alert-message success">
+        <h4 class="alert-heading">Confirmation Code</h4>
+        {{confirmation_code}}
+    </div>
+    <p>
+        It would help us out if you'd spread the word so we can get a few more people to take the survey. Just click the Tweet button to tell all your followers about the experiment:
+        <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://www.cs.cf.ac.uk/recognition/twitterexp/" data-text="I just did the tweetcues experiment and helped make science a (little) bit better!" data-via="recognitionEU" data-size="large" data-related="martinjc">Tweet</a>
+    </p>
+    <p>
+        If you'd like to contact the people responsible for this survey, please tweet <a href="https://twitter.com/intent/user?screen_name=recognitionEU">@recognitionEU</a>.
+    </p>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+{% endblock %}

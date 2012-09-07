@@ -1,0 +1,38 @@
+/* TEAM */
+
+    Website coded by:   Martin Chorley
+                        http://martinjc.com
+                        @martinjc
+                        Cardiff, UK
+
+    Stats analysis by:  Gualtiero Colombo
+                        http://users.cs.cf.ac.uk/G.Colombo
+                        @walter_colombo
+                        Cardiff, UK
+
+    Original Idea by:   Stuart Allen
+                        http://users.cs.cf.ac.uk/Stuart.M.Allen/
+                        @monkeyfishgoat
+                        Cardiff, UK
+
+    Delay tolerated by: Roger Whitaker
+                        http://users.cs.cf.ac.uk/R.M.Whitaker/
+                        Cardiff, UK
+
+    Testing & Feedback: Matthew Williams
+                        http://www.mattjw.net/
+                        @voxmjw
+                        Cardiff, UK
+                    
+/* THANKS */
+
+    Systems support:    Robert Evans
+                        http://users.cs.cf.ac.uk/Robert.Evans/
+
+/* SITE */
+    
+    Last updated: 20/02/2012
+    Standards: HTML5, CSS3
+    Components: Twitter Bootstrap, jQuery, Django, tweepy
+    Software: Sublime Text 2, Aptana, CodeKit
+

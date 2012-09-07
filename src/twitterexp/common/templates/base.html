@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+    {% load static %}
+    {% get_static_prefix as STATIC_PATH %}
+    <head>
+        <meta charset="utf-8">
+        <title>{% block title %}Twitter-Experiment{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="description" content="">
+        <meta name="author" content="Martin Chorley">
+        <meta name="author" content="@martinjc">
+
+        <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+        <script
+        src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <!-- Styles! -->
+        <link href="{{ STATIC_PATH }}css/bootstrap.css" type="text/css" rel="stylesheet">
+
+        <!-- Le fav and touch icons -->
+        <link rel="shortcut icon" type="image/x-icon" href="{{ STATIC_PATH }}img/favicon.ico">
+        <link rel="apple-touch-icon" href="{{ STATIC_PATH }}img/57x57.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="{{ STATIC_PATH }}img/72x72.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="{{ STATIC_PATH }}img/114x114.png">
+        <link type="text/plain" rel="author" href="{{STATIC_PATH}}humans.txt" />
+        {% block head %}
+        {% endblock %}
+    </head>
+    <body>
+        <header>
+            <nav class="navbar navbar-fixed">
+                <div class="navbar-inner">
+                    <div class="container">
+                        <a class="brand" href="{{ root_url }}">TweetCues</a>
+                        <ul class="nav">
+                            <li>
+                                <a href="#modal-about" data-toggle="modal">About</a>
+                            </li>
+                            <li>
+                                <a href="#modal-privacy" data-toggle="modal">Privacy</a>
+                            </li>
+                            <li>
+                                <a href="#modal-contact" data-toggle="modal">Contact</a>
+                            </li>
+                            {% block nav %}
+                            {% endblock %}
+                        </ul>
+                        {% if user %}
+                        <ul class="nav secondary-nav">
+                            <li><img class="profile" src="{{ user.twitter_user.profile_image_url }}"/>
+                            </li>
+                            <li>
+                                <a href="http://www.twitter.com/{{ user.twitter_user.screen_name }}">{{ user.twitter_user.screen_name }}</a>
+                            </li>
+                            <li>
+                                <a href="{{ root_url }}auth/logout/">Logout</a>
+                            </li>
+                        </ul>
+                        {% endif %}
+                    </div>
+                </div>
+            </nav>
+            {% block header %}
+            {% endblock %}
+        </header>
+        {% block content %}
+        {% endblock %}
+        <footer class="base">
+            <div class="container">
+                <div class="row">
+                    <small class="span7">
+                        <p>
+                            &copy; 2011 - <a href="http://www.cs.cardiff.ac.uk" title="Cardiff University School of Computer Science &amp; Informatics">School of Computer Science &amp; Informatics</a>, <a href="http://www.cardiff.ac.uk" title="Cardiff University">Cardiff University</a>
+                        </p>
+                        <p>
+                            Funded by EU-FP7 grant 257756 "<a href="http://www.recognition-project.eu" title="Recognition Project">Recognition</a>", a Future Emerging Technologies project concerning Self-Awareness in Autonomic Systems
+                        </p></small>
+                    <img class="span5" src="{{ STATIC_PATH }}img/recognition_small.png"></img>
+                    </small>
+                </div>
+            </div>
+            {% block footer %}
+            {% endblock %}
+        </footer>
+        <aside id="modal-about" class="modal hide fade">
+            <h2 class="modal-header">About<a href="#" class="close" data-dismiss="modal" >&times;</a></h2>
+            <p class="modal-body">
+                The TweetCues Experiment is being carried out by the School of Computer Science and Informatics as part of the "Recognition" project. Recognition is an European Union research
+                project funded under the FP7 Future Emerging Technologies scheme. For more information on the project, please see the project website at http://www.recognition-project.eu.
+                <br />
+                Created by <a href="https://twitter.com/intent/user?screen_name=martinjc">@martinjc</a> and <a href="https://twitter.com/intent/user?screen_name=waltercolombo">@waltercolombo</a> for <a href="https://twitter.com/intent/user?screen_name=RecognitionEU">@RecognitionEU</a>
+            </p>
+        </aside>
+        <aside id="modal-privacy" class="modal hide fade">
+            <h2 class="modal-header">Privacy<a href="#" class="close" data-dismiss="modal" >&times;</a></h2>
+            <p class="modal-body">We absolutely will not use, sell or distribute any of your personal data without your express permission.<br/>
+                The only personal data we collect is your twitter username, your twitter id number and a link to your twitter profile image. This data is associated with your responses to the questions in the experiment. This data will not be used for any purposes other than to associate your responses to an individual twitter account.<br/>
+                At no point will we make the fact that you have taken part in this experiment public, all responses will be treated anonymously when reporting results.
+                <br/>
+                We will not contact you in any way following the experiment<br/>
+                If you would like your data to be removed from our system, please email m.j.chorley@cs.cardiff.ac.uk, telling us your twitter username and asking to be removed.
+            </p>
+
+        </aside>
+        <aside id="modal-contact" class="modal hide fade">
+            <h2 class="modal-header">Contact<a href="#" class="close" data-dismiss="modal" >&times;</a></h2>
+            <p class="modal-body">
+                To contact us tweet @recogntionEU or @martinjc, or email m.j.chorley@cs.cardiff.ac.uk
+                <br/>
+                To remove your data from the experiment, email the address above with the subject "REMOVE -your_twitter_username-".
+            </p>
+        </aside>
+        <!-- Javascript! -->
+        <!-- stuck all the way down here for performance -->
+        <script src="{{ STATIC_PATH }}js/jquery.min.js"></script>
+        <script src="{{ STATIC_PATH }}js/bootstrap-modal.js"></script>
+        <script src="{{ STATIC_PATH }}js/ajaxcsrf.js"></script>
+        <script src="//platform.twitter.com/widgets.js"></script>
+        {% block scripts %}
+        {% endblock %}
+        <script type="text/javascript">
+
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-29804866-1']);
+          _gaq.push(['_trackPageview']);
+
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+
+        </script>
+    </body>
+</html>

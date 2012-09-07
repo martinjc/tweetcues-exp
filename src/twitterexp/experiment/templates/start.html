@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container masthead">
+    <h1>Welcome to the experiment!</h1>
+    <p>
+        Excellent, it appears you meet the criteria for participating in our experiment. Over the next few pages we'll show you some information about a number of tweets and ask you to decide which of the tweets you'd prefer to read based on that information. To make your selection, just click on the relevant table of information. The tweet will be displayed for you to see, then you can move on to the next question by clicking the 'Next Question' button.
+    </p>
+    <p>
+        As this is a scientific experiment we'd appreciate it if you committed to take part responsibly and answer all the questions honestly. That would really help us out. It's a short survey, so should only take a few minutes and we're really grateful for your time!
+    </p>
+    <p>
+        If you would like to stop taking part in the experiment, simply close the current browser window/tab or go to a different web site. If you'd like to remove your responses from the experiment, see the <a href="#modal-contact" data-toggle="modal">Contact</a> information.
+    </p>
+    <div id="progress">
+        <p>
+            We're just retrieving some tweets from twitter for the test, please bear with us as this might take a couple of minutes. Once we're ready to begin the button below will become active. Please do not refresh the page!
+        </p>
+        <img src="{{ STATIC_PATH }}img/ajax-loader.gif" />
+    </div>
+    <form action="{{ root_url }}question/" class="start" method="post">
+        {% csrf_token %}
+        <button type="submit" id="sb" class="btn xlarge primary disabled" disabled=true>
+            Start the Quiz!
+        </button>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    var root_url = "{{ root_url }}";
+
+</script>
+<script src="{{ STATIC_PATH }}js/gettweets.js"></script>
+{% endblock %}

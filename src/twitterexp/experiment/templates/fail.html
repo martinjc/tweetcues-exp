@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container masthead">
+    {% if user %} <h1>Oh Noes!</h1>
+    <p>
+        We're sorry, it looks like you either don't have enough followers or aren't following enough other users to take part in the experiment. Come back once you're more involved in the Twitter community and we'll let you in!
+    </p>
+    {% endif %}
+    {% if auth_error %} <h1>Oh Noes!</h1>
+    <p>
+        Seems like there's been some sort of error authenticating with Twitter. Perhaps try again later?
+    </p>
+    <aside class="login">
+        <a href="{{ root_url }}start/" class="btn xlarge primary">Back to the start</a>
+    </aside>
+    {% endif %} <p></p>
+</div>
+{% endblock %}

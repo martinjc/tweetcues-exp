@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block header %}
+    {% if auth_error %}
+        <div class="alert-message error">
+            <strong>Oh no!</strong> Looks like something went wrong with the twitter authentication. Try again?
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="container masthead">
+    <h1>Welcome to the TweetCues Experiment</h1>
+    <p>
+        The TweetCues experiment aims to understand how people view information on Twitter, and we'd like you to take part! In order to participate you need to be a Twitter user following at least {{ following }} people and who has at least {{ followers }} followers. The experiment is very simple and will only take a couple of minutes of your time.
+    </p>
+    <p>
+        We won't use, sell or distribute any of your personal data without your permission. For more information please see our <a href="#modal-privacy" data-toggle="modal">privacy policy</a>.
+    </p>
+    <aside class="login">
+        <a href="{{ root_url }}auth/" class="btn xlarge primary"><img src="https://si0.twimg.com/images/dev/cms/intents/bird/bird_blue/bird_16_blue.png" alt="sign in with twitter">Sign in with Twitter</img></a>
+    </aside>
+</div>
+{% endblock %}
